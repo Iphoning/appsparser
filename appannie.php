@@ -1,24 +1,6 @@
 <?php
 include_once ('simple_html_dom.php');
 
-$item = [
-    'name' => 'name',
-    'iap' => 'true',
-    'company_name' => 'ska',
-    'id' => 123,
-    'rating' => 32,
-    'rates_count' => 32223,
-    'links' => implode(',', ['str1', 'str2']),
-];
-
-$fp = fopen('test.csv', 'w');
-
-fputcsv($fp, $item);
-
-fclose($fp);
-
-exit;
-
 //$countries = json_decode(file_get_contents('countries.json'), true);
 //$countries = $countries['country_list'];
 //$countries = [['country_code' => 'US']];
