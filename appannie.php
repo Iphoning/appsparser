@@ -1,6 +1,24 @@
 <?php
 include_once ('simple_html_dom.php');
 
+$item = [
+    'name' => 'name',
+    'iap' => 'true',
+    'company_name' => 'ska',
+    'id' => 123,
+    'rating' => 32,
+    'rates_count' => 32223,
+    'links' => implode(',', ['str1', 'str2']),
+];
+
+$fp = fopen('test.csv', 'w');
+
+fputcsv($fp, $item);
+
+fclose($fp);
+
+exit;
+
 //$countries = json_decode(file_get_contents('countries.json'), true);
 //$countries = $countries['country_list'];
 //$countries = [['country_code' => 'US']];
@@ -89,7 +107,17 @@ function run($params, $ch) {
         exit;
     }
 
-    $items = [];
+    $uri = __DIR__.'/reports/'.$params['country_code'].'_'.$params['market'];
+
+    if (isset($params['device'])) {
+        $uri .= '_'.$params['device'];
+    }
+
+    $uri .= '.csv';
+
+    $fp = fopen($uri, 'w');
+
+    var_dump('receive rows: '.count($json['table']['rows']));
 
     foreach ($json['table']['rows'] as $row) {
         $item = [
@@ -116,7 +144,7 @@ function run($params, $ch) {
             CURLOPT_COOKIEJAR => 'cookies.txt',
         ]);
 
-        sleep(15);
+        sleep(10);
 
         $response = curl_exec($ch);
 
@@ -124,15 +152,18 @@ function run($params, $ch) {
 
         $links = $dom->find('[class=app-box-links links] a');
 
-        $item['links'] = [];
+        $links_arr = [];
 
         foreach ($links as $link) {
-            $item['links'][] = $link->href;
+            $links_arr[] = $link->href;
         }
 
-        $items[$row[1][0]['id']] = $item;
+        $item['links'] = implode(',', $links_arr);
 
-        file_put_contents(__DIR__.'/reports/'.$params['country_code'].'_'.$params['market'].'_'.$params['device'].'.txt', json_encode($items));
+        fputcsv($fp, $item);
+
+        fclose($fp);
+
         exit;
     }
 
