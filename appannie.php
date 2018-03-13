@@ -68,11 +68,12 @@ function run($params, $ch) {
         CURLOPT_COOKIEJAR => 'cookies.txt',
     ]);
 
-    sleep(15);
+    sleep(10);
     $response = curl_exec($ch);
 
     if (!$response) {
         var_dump('invalid response '.$response);
+        var_dump($query);
         exit;
     }
     try {
@@ -130,6 +131,12 @@ function run($params, $ch) {
 
         $response = curl_exec($ch);
 
+        if (!$response) {
+            var_dump('cant get app page ', $response);
+            var_dump($row[1][0]['url']);
+            continue;
+        }
+
         $dom = str_get_html($response);
 
         $links = $dom->find('[class=app-box-links links] a');
@@ -144,10 +151,9 @@ function run($params, $ch) {
 
         fputcsv($fp, $item);
 
-        fclose($fp);
-
-        exit;
     }
 
-}
+    var_dump('csv completed!');
 
+    fclose($fp);
+}
