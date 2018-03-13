@@ -63,7 +63,7 @@ function run($params, $ch) {
     curl_setopt_array($ch, [
 
         CURLOPT_URL => "https://www.appannie.com/ajax/top-chart/table/?$query",
-//                        CURLOPT_VERBOSE => true,
+        CURLOPT_VERBOSE => true,
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_HTTPHEADER => [
             "Accept: application/json, text/plain, */*",
