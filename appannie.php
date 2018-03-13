@@ -1,5 +1,5 @@
 <?php
-include_once ('vendor/simple-html-dom/simple-html-dom/simple_html_dom.php');
+include_once ('simple_html_dom.php');
 
 //$countries = json_decode(file_get_contents('countries.json'), true);
 //$countries = $countries['country_list'];
