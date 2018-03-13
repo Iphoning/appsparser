@@ -20,7 +20,7 @@ foreach ($markets as $market) {
         $params = [
             "market"=> $market,
             "country_code" => 'US',
-            "category"=> 1,
+            "category"=> 36,
             "date" => "2018-03-12",
             "rank_sorting_type"=> "rank",
             "page_size" => 500,
