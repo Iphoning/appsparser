@@ -6,7 +6,7 @@ include_once ('simple_html_dom.php');
 //$countries = [['country_code' => 'US']];
 
 $markets = [
-    'google-play',
+//    'google-play',
     'ios'
 ];
 
