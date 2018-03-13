@@ -21,7 +21,7 @@ foreach ($markets as $market) {
             "market"=> $market,
             "country_code" => 'US',
             "category"=> 36,
-            "date" => "2018-03-12",
+            "date" => "2018-03-13",
             "rank_sorting_type"=> "rank",
             "page_size" => 500,
             "iap" => 'true',
@@ -63,7 +63,7 @@ function run($params, $ch) {
             "Cache-Control: no-cache",
             "X-Requested-With: XMLHttpRequest",
         ],
-        CURLOPT_USERAGENT => ' Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.146 Safari/537.36',
+        CURLOPT_USERAGENT => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.146 Safari/537.36',
         CURLOPT_COOKIEFILE => 'cookies.txt',
         CURLOPT_COOKIEJAR => 'cookies.txt',
     ]);
@@ -122,7 +122,7 @@ function run($params, $ch) {
                 "Cache-Control: no-cache",
                 "X-Requested-With: XMLHttpRequest",
             ],
-            CURLOPT_USERAGENT => ' Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.146 Safari/537.36',
+            CURLOPT_USERAGENT => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.146 Safari/537.36',
             CURLOPT_COOKIEFILE => 'cookies.txt',
             CURLOPT_COOKIEJAR => 'cookies.txt',
         ]);
