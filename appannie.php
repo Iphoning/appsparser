@@ -1,4 +1,5 @@
-<?
+<?php
+
 $countries = json_decode(file_get_contents('countries.json'), true);
 $countries = $countries['country_list'];
 //$countries = [['country_code' => 'US']];
