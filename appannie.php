@@ -14,13 +14,19 @@ $devices = [
     'ios' => ['iphone', 'ipad']
 ];
 
+$categories = [
+    'google-play' => [1],
+    'ios' => [36],
+];
+
 $ch = curl_init();
 foreach ($markets as $market) {
 //    foreach ($countries as $country) {
+    foreach ($categories[$market] as $category) {
         $params = [
             "market"=> $market,
             "country_code" => 'US',
-            "category"=> 36,
+            "category"=> $category,
             "date" => "2018-03-13",
             "rank_sorting_type"=> "rank",
             "page_size" => 500,
@@ -44,6 +50,7 @@ foreach ($markets as $market) {
             run($params, $ch);
         }
 
+    }
 //    }
 }
 
