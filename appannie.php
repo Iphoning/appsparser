@@ -1,7 +1,8 @@
 <?php
+include_once ('vendor/simple-html-dom/simple-html-dom/simple_html_dom.php');
 
-$countries = json_decode(file_get_contents('countries.json'), true);
-$countries = $countries['country_list'];
+//$countries = json_decode(file_get_contents('countries.json'), true);
+//$countries = $countries['country_list'];
 //$countries = [['country_code' => 'US']];
 
 $markets = [
@@ -70,10 +71,21 @@ function run($params, $ch) {
     sleep(15);
     $response = curl_exec($ch);
 
-    $json = json_decode($response, true);
+    if (!$response) {
+        var_dump('invalid response '.$response);
+        exit;
+    }
+    try {
+
+        $json = json_decode($response, true);
+
+    } catch (Throwable $e) {
+        var_dump($e->getMessage());
+        exit;
+    }
 
     if (!isset($json['table'])) {
-        var_dump($json. ' oj');
+        var_dump('invalid json '.$json);
         exit;
     }
 
@@ -92,7 +104,7 @@ function run($params, $ch) {
         curl_setopt_array($ch, [
 
             CURLOPT_URL => "https://www.appannie.com".$row[1][0]['url'],
-            CURLOPT_VERBOSE => true,
+//            CURLOPT_VERBOSE => true,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HTTPHEADER => [
                 "Accept: application/json, text/plain, */*",
@@ -105,15 +117,24 @@ function run($params, $ch) {
         ]);
 
         sleep(15);
+
         $response = curl_exec($ch);
 
-        file_put_contents('test.txt', $response);
-        exit;
+        $dom = str_get_html($response);
+
+        $links = $dom->find('[class=app-box-links links] a');
+
+        $item['links'] = [];
+
+        foreach ($links as $link) {
+            $item['links'][] = $link->href;
+        }
 
         $items[$row[1][0]['id']] = $item;
+
+        file_put_contents(__DIR__.'/reports/'.$params['country_code'].'_'.$params['market'].'_'.$params['device'].'.txt', json_encode($items));
+        exit;
     }
 
-    file_put_contents(__DIR__.'/reports/'.$params['country_code'].'_'.$params['market'].'_'.$params['device'].'.txt', json_encode($items));
-exit;
 }
 
